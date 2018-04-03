@@ -1,0 +1,86 @@
+---
+title: "Sta 531 HW7 (let it be the last one, please, let it end)"
+author: "Daniel Truver"
+date: "04/05/2018"
+header-includes:
+  - \usepackage{amsmath}
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### (1) Some Markov Chain
+
+#### (a) Communicating Classes 
+
+We say node $i$ communicates with $j$ if $\exists n$ such that $P(X_n = i \mid X_0 = j)$
+We want to identify all pairs of nodes $\{i, j\}$ such that $i$ communicates with $j$ AND $j$ communicates with $i$. Nodes do not constitute a communicating class if the communication only goes one way. I remember this distinction by thinking about my ex-girlfriend. 
+
+$\{1,5\}$ is a communicating class, as is $\{2,4\}$ is a communicating class.
+
+##### (b) Recurrent and Transient States
+
+States 1, 3, and 5 are recurrent; states 2 and 4 are transient. 
+
+##### (c) Invariant Distributions 
+
+We need to find a probability vector $\pi$ such that 
+$$
+\pi P = \begin{bmatrix} \pi_1&\pi_2&\pi_3&\pi_4&\pi_5 \end{bmatrix}P = \begin{bmatrix} \pi_1&\pi_2&\pi_3&\pi_4&\pi_5 \end{bmatrix} = \pi.
+$$
+
+We get the following system of equations:
+$$
+\begin{aligned}
+\pi_1 &= \pi_1/2 + \pi_5/2\\
+\pi_2 &= \pi_2/2 + \pi_4/2\\
+\pi_3 &= \pi_3 + \pi_4/4 \\
+\pi_4 &= \pi_2/2 + \pi_4/4 \\
+\pi_5 &= \pi_1/2 + \pi_4/4 + \pi_5/2
+\end{aligned}
+$$
+
+When we solve this system of equations, we get 
+$$
+\begin{aligned}
+&\pi = \begin{bmatrix} x&0&y&0&x \end{bmatrix} \\
+&x\in\left[0,\frac{1}{2}\right]\\
+&y = 1-2x
+\end{aligned}
+$$
+
+#### (2) Another Markov Chain
+
+Let $X_0, X_1, X_2, \dots$ be a markov chain with tranistion matrix $P$. Then, if we take $Y_t = X_{kt}$, we get $Y_0 = X_0$ so the initial distribution of $Y_t$ is the same as $X_t$. We can get the markov property of $Y_t$ from the markov property of $X_t$.
+
+$$
+\begin{aligned}
+P(Y_t = j\mid Y_{t-1} = i_1, Y_{t-2} = i_{2}, \dots) 
+&= P(X_{kt} = j \mid X_{k(t-1)} = i_1, X_{k(t-2)}=i_2) \\
+&=  P(X_{kt} = j \mid X_{k(t-1)} = i_1) = P_{ij}^{(k)} \\
+&= P(Y_t = j\mid Y_{t-1} = i_1)
+\end{aligned}
+$$
+
+The third line gives us the markov property $Y_t$; the second line gives us the transition probabilities, so the transition matrix of $Y_t$ is $P^k$.
+
+#### (3) Some Proofs
+
+##### (a) Show aperiodicity 
+
+Suppose we have a finite state markov chain with the property that $\exists i: P_{ii} > 0$. That is, at least one state has a non-zero probability of transitioning to itself. Currently, a counterexample exists.
+
+##### (b) Aperiodic + Irreducible = Regular
+
+I need two additional ideas that I do not recall from class. Without these outside facts, I would not have been able to prove this, especially not with the IN-CLASS test approaching.
+
+The first is recurrence, specifically the fact that an irreducible finite markov chain is recurrent (it must hit every state an infinite number of times). 
+
+I also need a theorem that says for an aperiodic Markov chain, $\exists N$ such that $\forall n \geq N:P^n_{ii} > 0$; the number theory involved in this escapes me. 
+
+Together with irreducibility, we have that for each $i,j$, there is an integer $N_{ij}$ such that $\forall n \geq N_{ij}:P^n_{ij} > 0$. Take $N = \max N_{ij}$, then $P^N_{ij} > 0$.
+
+#### (4) Timmy's Books
+
