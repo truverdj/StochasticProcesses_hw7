@@ -70,17 +70,33 @@ The third line gives us the markov property $Y_t$; the second line gives us the 
 
 ##### (a) Show aperiodicity 
 
-Suppose we have a finite state markov chain with the property that $\exists i: P_{ii} > 0$. That is, at least one state has a non-zero probability of transitioning to itself. Currently, a counterexample exists.
+Suppose we have a finite state markov chain with the property that $\exists i: P_{ii} > 0$ AND it is irreducible. This tells us that the entire chain is one communicating class and there is a state with period = 1. And that means, say it with me, every state in the chain has period = 1. So it's aperiodic.
 
 ##### (b) Aperiodic + Irreducible = Regular
 
-I need two additional ideas that I do not recall from class. Without these outside facts, I would not have been able to prove this, especially not with the IN-CLASS test approaching.
+I need an additional idea that I do not recall from class. Without this outside fact, I would not have been able to prove this, especially not with the IN-CLASS test approaching.
 
-The first is recurrence, specifically the fact that an irreducible finite markov chain is recurrent (it must hit every state an infinite number of times). 
+I need a theorem that says for an aperiodic Markov chain, $\exists N$ such that $\forall n \geq N:P^n_{ii} > 0$; the number theory involved in this escapes me. 
 
-I also need a theorem that says for an aperiodic Markov chain, $\exists N$ such that $\forall n \geq N:P^n_{ii} > 0$; the number theory involved in this escapes me. 
+Together with irreducibility, we have that for each $i,j$, there is an integer $N_{ij}$ such that $\forall n \geq N_{ij}:P^n_{ij} > 0$. Take $N = \max N_{ij}$. By the number theory theorem above, for each $i$ there is an integer $M_{ii}$ such that forall $m \geq M_{ii}:P^m_{ii} > 0$. Take $M = \max M_{ii}$. We then invoke the Chapman Kolmogorov equation.
 
-Together with irreducibility, we have that for each $i,j$, there is an integer $N_{ij}$ such that $\forall n \geq N_{ij}:P^n_{ij} > 0$. Take $N = \max N_{ij}$, then $P^N_{ij} > 0$.
+$$
+P^{M+N}_{ij} = \sum_k P_{ik}^M P_{kj}^N \geq P_{ii}^MP_{kj}^N > 0
+$$
 
 #### (4) Timmy's Books
 
+We will model Timmy's book choosing process with the following markov chain described by its martix.
+$$
+P = \bordermatrix{
+    & 123 & 132 & 213 & 231 & 312 & 321 \cr
+    123 & \alpha_1 & 0 & \alpha_2 & 0 & \alpha_3 & 0 \cr
+    132 & 0 & \alpha_1 & \alpha_2 & 0 & \alpha_3 & 0 \cr
+    213 & \alpha_1 & 0 & \alpha_2 & 0 & 0 & \alpha_3 \cr
+    231 & \alpha_1 & 0 & 0 & \alpha_2 & 0 & \alpha_3 \cr
+    312 & 0 & \alpha_1 & 0 & \alpha_2 & \alpha_3 & 0 \cr
+    321 & 0 & \alpha_1 & 0 & \alpha_2 & 0 & \alpha_3 
+  }
+$$
+
+Assuming that the $\alpha_i$ are non-zero, this is an irreducible Markov Chain; it is aperiodic by definition. These conditions are sufficient to say it has a stationary distribution. That is, $p_n$ converges as $n\to\infty$. 
